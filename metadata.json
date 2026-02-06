@@ -1,0 +1,8 @@
+{
+  "name": "WhiteLabel SaaS Service Platform",
+  "description": "A multi-tenant, white-label PWA platform for local service businesses with dynamic branding, booking, and Stripe Connect integration.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ]
+}

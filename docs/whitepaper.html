@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VantakOS White Paper</title>
+    <style>
+      :root {
+        --ink: #0f172a;
+        --muted: #475569;
+        --border: #e2e8f0;
+        --brand: #38bdf8;
+      }
+      html, body { margin: 0; padding: 0; }
+      body {
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        color: var(--ink);
+        line-height: 1.6;
+        background: #fff;
+      }
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 48px 24px 96px;
+      }
+      h2, h3 { letter-spacing: -0.01em; }
+      h2 { font-size: 28px; margin: 28px 0 12px; }
+      h3 { font-size: 22px; margin: 24px 0 10px; }
+      p { margin: 10px 0; color: var(--ink); }
+      ul { margin: 8px 0 16px 22px; }
+      li { margin: 6px 0; }
+      .lead { font-size: 18px; color: var(--muted); }
+      .kicker { text-transform: uppercase; font-size: 11px; letter-spacing: 0.18em; color: var(--muted); }
+      .title { font-size: 36px; font-weight: 900; margin: 6px 0 12px; }
+      .subtitle { font-size: 18px; color: var(--muted); margin: 0 0 28px; }
+      .hr { height: 1px; background: var(--border); margin: 28px 0; }
+      .tag {
+        display: inline-block; border: 1px solid var(--border); padding: 4px 10px; border-radius: 999px;
+        font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+      }
+      .code {
+        background: #0f172a0a; border: 1px solid #0f172a12; border-radius: 12px; padding: 16px; overflow: auto; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      }
+      .mermaid { margin: 18px 0; }
+      @media print {
+        .no-print { display: none !important; }
+        a[href]:after { content: ""; }
+        .container { padding: 0 0 24px; }
+      }
+      .actions { position: sticky; top: 0; background: #ffffffd9; backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; z-index: 10; }
+      .btn {
+        background: var(--ink); color: #fff; border: 1px solid #000; font-weight: 800; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+        padding: 10px 14px; border-radius: 12px; cursor: pointer;
+      }
+      .btn.secondary { background: #fff; color: var(--ink); border-color: var(--border); }
+    </style>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({ startOnLoad: true, theme: "default" });
+    </script>
+  </head>
+  <body>
+    <div class="actions no-print">
+      <span class="kicker">VantakOS</span>
+      <div>
+        <button class="btn secondary" onclick="window.location.reload()">Reload</button>
+        <button class="btn" onclick="window.print()">Export PDF</button>
+      </div>
+    </div>
+    <div class="container">
+      <div class="kicker">White Paper</div>
+      <div class="title">VantakOS</div>
+      <div class="subtitle">A multi-tenant, white‑label PWA platform for local service businesses.</div>
+      <div class="hr"></div>
+
+      <h2>Executive summary</h2>
+      <p class="lead">VantakOS delivers branded booking, payments, and an owner command center out‑of‑the‑box. Tenants are resolved dynamically to drive live branding, app manifest, and payment routing per business. Bookings complete via Stripe Connect with automatic platform fee splits, and owner dashboards provide real‑time control of branding and payouts.</p>
+
+      <h2>Product overview</h2>
+      <ul>
+        <li><b>Audience</b>: Service SMBs (salons, spas, studios, clinics) and operators running multiple brands.</li>
+        <li><b>Value</b>: Launch a fully branded, installable app with integrated booking and payouts—no App Store submission.</li>
+        <li><b>Pricing model</b>: Starter (1.5%), Pro (1.0%), Elite (0.4%).</li>
+      </ul>
+
+      <h2>Core capabilities</h2>
+      <ul>
+        <li><b>White-label branding</b>: Live CSS variable injection and per-tenant PWA manifest.</li>
+        <li><b>PWA install</b>: iOS/Android install nudges and tenant-specific manifest.</li>
+        <li><b>Booking</b>: 3-step flow creates pending appointment and redirects to Stripe Checkout.</li>
+        <li><b>Payments</b>: Stripe Connect per merchant with application fees (platform) and transfers (merchant).</li>
+        <li><b>Command Center</b>: Branding DNA editor, payout connection, metrics, and tenant-aware AI support.</li>
+        <li><b>Prospector Engine</b>: Rapid demo tenant creation and preview links for sales.</li>
+      </ul>
+
+      <h2>Architecture</h2>
+      <div class="mermaid">
+        flowchart LR
+          A[Customer Browser] --> B[Resolve Tenant (slug/query)]
+          B --> C[Inject Theme (CSS vars)]
+          C --> D[Landing / Service List]
+          D --> E[Booking Flow]
+          E --> F[Create PENDING Appointment (Supabase)]
+          F --> G[Checkout API (Next route)]
+          G --> H[Stripe Checkout (Connect)]
+          H --> I[Stripe Webhook]
+          I --> J[Confirm Appointment (Supabase)]
+          J --> K[Owner Dashboard (Branding/Payments)]
+          C --> L[Dynamic Manifest (PWA Install)]
+      </div>
+
+      <h2>Payments and monetization</h2>
+      <ul>
+        <li>Connect onboarding links merchants’ bank accounts.</li>
+        <li>Checkout session computes application fee (platform) and transfers remainder to merchant.</li>
+        <li>Webhooks confirm and mark appointments paid/confirmed.</li>
+      </ul>
+
+      <h2>Booking sequence</h2>
+      <div class="mermaid">
+        sequenceDiagram
+          participant U as Customer
+          participant FE as Frontend (React)
+          participant DB as Supabase
+          participant API as Checkout API
+          participant ST as Stripe
+          participant WH as Webhook API
+          U->>FE: Select service, time, confirm
+          FE->>DB: Insert PENDING appointment
+          DB-->>FE: Appointment ID
+          FE->>API: Create Checkout Session
+          API->>DB: Lookup tenant (fees, Stripe account)
+          API->>ST: Create Checkout Session (fee + transfer)
+          ST-->>FE: Redirect URL
+          FE->>U: Redirect to Stripe Checkout
+          ST->>WH: checkout.session.completed
+          WH->>DB: Mark CONFIRMED, paid=true
+          DB-->>WH: OK
+          FE-->>U: Success screen
+      </div>
+
+      <h2>Owner Command Center</h2>
+      <ul>
+        <li>Branding DNA updates theme live and persists to Supabase.</li>
+        <li>Payment settings connect Stripe or open the Stripe dashboard via login link.</li>
+        <li>AI assistant (“Vantak Guide”) provides concise, tenant-aware answers.</li>
+      </ul>
+
+      <h2>Prospector Engine</h2>
+      <p>Creates demo tenants with discovered logo, seeds starter fee tier, and produces live preview links for prospects.</p>
+
+      <h2>Security and compliance</h2>
+      <ul>
+        <li>Stripe Connect isolates merchant funds; sensitive flows run server-side.</li>
+        <li>Supabase service role keys must remain server-only; enforce RLS.</li>
+        <li>Use environment variables for secrets in production.</li>
+      </ul>
+
+      <h2>Deploy and configuration</h2>
+      <ul>
+        <li><b>Local</b>: <code class="code">npm install</code> then <code class="code">npm run dev</code>.</li>
+        <li><b>Env</b>: <code>NEXT_PUBLIC_SUPABASE_URL=YOUR_SUPABASE_URL</code>, <code>SUPABASE_SERVICE_ROLE_KEY=YOUR_SUPABASE_SERVICE_ROLE_KEY</code>, <code>STRIPE_SECRET_KEY=YOUR_STRIPE_SECRET_KEY</code>, <code>STRIPE_WEBHOOK_SECRET=YOUR_STRIPE_WEBHOOK_SECRET</code>, <code>NEXT_PUBLIC_URL=http://localhost:3000</code>, <code>API_KEY=YOUR_API_KEY</code>.</li>
+        <li><b>Webhook</b>: Configure Stripe to POST to <code>/api/webhooks/stripe</code>.</li>
+      </ul>
+
+      <h2>Operator workflow</h2>
+      <ol>
+        <li>Create a demo tenant at <code>/admin/prospector</code>.</li>
+        <li>Share <code>/preview?tenant=slug</code> link.</li>
+        <li>Prospect claims via <code>/claim</code>, completes Stripe onboarding.</li>
+        <li>Configure branding in “Branding DNA”.</li>
+        <li>Connect payouts in “OS Settings”.</li>
+        <li>Seed services and start selling; webhooks confirm bookings.</li>
+        <li>Customers install the PWA from the banner.</li>
+      </ol>
+
+      <div class="hr"></div>
+      <div class="tag">VantakOS • White Paper</div>
+    </div>
+  </body>
+  </html>
+
+
+

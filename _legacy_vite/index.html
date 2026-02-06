@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>VantakOS | Service Economy OS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // 1. Resolve Tenant for Manifest Handshake
+      const params = new URLSearchParams(window.location.search);
+      const tenant = params.get('tenant') || 'glow-studio';
+      
+      // 2. Inject Dynamic Manifest Link
+      const link = document.createElement('link');
+      link.rel = 'manifest';
+      link.href = `/api/manifest/route?slug=${tenant}`;
+      link.onerror = () => {
+        console.warn('Failed to load manifest, using fallback');
+      };
+      document.head.appendChild(link);
+
+      // 3. Tailwind Configuration
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                primary: 'var(--brand-primary)',
+                secondary: 'var(--brand-secondary)',
+                accent: 'var(--brand-accent)',
+                background: 'var(--brand-bg)',
+              }
+            },
+            fontFamily: {
+              brand: ['var(--font-family)', 'sans-serif'],
+            },
+            borderRadius: {
+              'brand': 'var(--brand-radius)',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      :root {
+        --brand-primary: #3b82f6;
+        --brand-secondary: #1d4ed8;
+        --brand-accent: #eff6ff;
+        --brand-bg: #ffffff;
+        --brand-radius: 1.5rem;
+        --font-family: 'Inter', sans-serif;
+      }
+      body {
+        font-family: var(--font-family);
+        -webkit-tap-highlight-color: transparent;
+        background-color: var(--brand-bg);
+      }
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+      .bg-brand-primary { background-color: var(--brand-primary); }
+      .text-brand-primary { color: var(--brand-primary); }
+      .border-brand-primary { border-color: var(--brand-primary); }
+      
+      /* Smooth transitions for PWA feel */
+      * { transition: background-color 0.2s ease, border-color 0.2s ease; }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.0.0",
+    "react/": "https://esm.sh/react@19.0.0/",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/": "https://esm.sh/react-dom@19.0.0/",
+    "framer-motion": "https://esm.sh/framer-motion@11.11.11?external=react,react-dom",
+    "stripe": "https://esm.sh/stripe@^20.1.1",
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@^2.89.0",
+    "qrcode.react": "https://esm.sh/qrcode.react@^4.1.0?external=react,react-dom",
+    "next": "https://esm.sh/next@^16.1.1",
+    "next/": "https://esm.sh/next@^16.1.1/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-brand-background text-gray-900 font-brand antialiased">
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

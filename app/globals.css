@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-primary: #0f172a;
+  --color-brand-secondary: #ffffff;
+  --color-brand-accent: #2563eb;
+  --color-brand-background: #f8fafc;
+  --color-brand-border: #e2e8f0;
+}
+
+:root {
+  /* High-End Business Palette - "The Executive Stack" */
+  --brand-primary: #0f172a;    /* Slate 900 - The sophisticated "Ink" */
+  --brand-secondary: #ffffff;  /* Pure White - For clarity */
+  --brand-accent: #2563eb;     /* Professional Blue - For action buttons */
+  --brand-bg: #f8fafc;        /* Slate 50 - Very subtle background gray */
+  --brand-border: #e2e8f0;    /* Slate 200 - Hairline borders */
+  --brand-radius: 8px;         /* Less rounded, more "Swiss" design */
+  --font-family: 'Inter', sans-serif;
+}
+
+/* Shimmer animation for Pioneer Badge */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-\[shimmer_3s_ease-in-out_infinite\] {
+  animation: shimmer 3s ease-in-out infinite;
+}
+
